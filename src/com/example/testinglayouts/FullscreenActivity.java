@@ -22,7 +22,7 @@ import com.example.testinglayouts.util.SystemUiHider;
  * @see SystemUiHider
  */
 public class FullscreenActivity extends Activity {
-	public final static String EXTRA_MESSAGE = "com.example.gbp.MESSAGE";
+	public final static String EXTRA_MESSAGE = "com.fullscreenactivity.gbp.MESSAGE";
 	int lastClicked = 0;
 	/**
      * Whether or not the system UI should be auto-hidden after
@@ -125,15 +125,46 @@ public class FullscreenActivity extends Activity {
         GridView gridview = (GridView) findViewById(R.id.gridView1);
         gridview.setAdapter(new ImageAdapter(this));
 
-        gridview.setOnItemClickListener(new OnItemClickListener() {
+        gridview.setOnItemClickListener(new OnItemClickListener() 
+        {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
             {
-                Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+            	switch(position)
+            	{
+            	case 0:
+            		Toast.makeText(FullscreenActivity.this, "Blender", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 1:
+            		Toast.makeText(FullscreenActivity.this, "Cordless", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 2:
+            		Toast.makeText(FullscreenActivity.this, "Dishwasher", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 3:
+            		Toast.makeText(FullscreenActivity.this, "Dryer", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            		default:
+            			Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+            			break;
+            	}
+                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
                 lastClicked = position;
             }
         });
+        
+        Intent intent = getIntent();
+		String message = intent.getStringExtra(FullscreenActivity.EXTRA_MESSAGE);
+		
+		if(message != "Good usage")
+		{
+			
+		}
     }
-    //TODO:Have a switch for which graph to display in the graphing activity based on what int is sent 
+
     public void sendMessage(View view) 
     {
     	Intent intent = new Intent(this, GraphingActivity.class);
