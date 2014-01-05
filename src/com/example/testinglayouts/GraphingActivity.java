@@ -174,6 +174,7 @@ public class GraphingActivity extends Activity {
 		GraphView graphView;
 		GraphViewSeries seriesRnd;
 		GraphViewSeriesStyle styleRnd;
+		double vSin = 0;
 		
 		
 		switch(thisGraph)
@@ -282,7 +283,7 @@ public class GraphingActivity extends Activity {
 			// random curve
 			int numSin = 1000;
 			data = new GraphViewData[numSin];
-			int vSin =0;
+			vSin =0;
 			for (int i=0; i<numSin; i++)
 			{
 				vSin += 0.2;
@@ -472,15 +473,12 @@ public class GraphingActivity extends Activity {
 			for (int i=0; i<numSin; i++)
 			{
 				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
+				data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
 			}
 			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
 			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
 			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
+			graphView = new LineGraphView(this, message);
 				
 			// add data
 			graphView.addSeries(seriesRnd);
