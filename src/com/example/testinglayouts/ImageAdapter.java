@@ -49,7 +49,7 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.exhaustfan, R.drawable.kettle,
             R.drawable.microwave, R.drawable.oven,
             R.drawable.refrigerator, R.drawable.toaster,
-            R.drawable.tv, R.drawable.washer,
+            R.drawable.television, R.drawable.washer,
             R.drawable.blender
     };
 }

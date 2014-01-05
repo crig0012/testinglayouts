@@ -29,10 +29,10 @@ public class FullscreenActivity extends Activity {
 	public final static String DEVICE_THREE = "com.fullscreenactivity.gbp.DEVICE_THREE";
 	public final static String DEVICE_FOUR = "com.fullscreenactivity.gbp.DEVICE_FOUR";
 
-	String selectedDeviceOne = "";
-	String selectedDeviceTwo = "";
-	String selectedDeviceThree = "";
-	String selectedDeviceFour = "";
+	String selectedDeviceOne = null;
+	String selectedDeviceTwo = null;
+	String selectedDeviceThree = null;
+	String selectedDeviceFour = null;
 	/**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -196,7 +196,8 @@ public class FullscreenActivity extends Activity {
             			Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             			break;
             	}
-                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();                
+                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();  
+            	setSelectedDevice(position);
             }
         });
         

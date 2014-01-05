@@ -5,8 +5,6 @@
     android:background="#0099cc"
     tools:context=".GraphingActivity" >
 
-
-
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -22,6 +20,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/graph1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dip"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/graph2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dip"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/graph3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dip"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/graph4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dip"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -41,23 +75,16 @@
                 android:layout_weight="1"
                 android:onClick="sendMessage"
                 android:text="Back" />
-            
-             <Button
+
+            <Button
                 android:id="@+id/dummy_button"
                 style="?buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="sendMessage"
-                android:text="Compare" />            
-
+                android:text="Compare" />
         </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/graph1"
-        android:layout_width="fill_parent"
-        android:layout_height="250dip"
-        android:orientation="vertical" />
-
     </FrameLayout>
+
 </FrameLayout>

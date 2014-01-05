@@ -2,7 +2,6 @@ package com.example.testinglayouts;
 
 import java.lang.reflect.Array;
 
-import android.R;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,6 +22,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
+//import android.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -73,20 +73,7 @@ public class GraphingActivity extends Activity {
 		setContentView(R.layout.activity_graphing);
 		
 		Intent intent = getIntent();
-		if(intent == null)
-		{
-			message = "0";
-		}
-		else
-		{
-			extras = intent.getExtras();
-		}
-		
-		if(message == null)
-			message = intent.getStringExtra(GraphingActivity.EXTRA_MESSAGE);;
-		
-		if(message == null)
-			message = "0";
+		extras = intent.getExtras();
 		
 		whichGraph(extras);
 	}
@@ -104,7 +91,7 @@ public class GraphingActivity extends Activity {
 	protected void whichGraph(Bundle extras)
 	{
 		//TODO: Make an array of graphs, then call showGraph(thisGraph)?
-		LinearLayout layout = (LinearLayout) findViewById(R.id.graph1);
+		LinearLayout layout = null;
 		GraphView graphView;
 		GraphViewSeries seriesRnd;
 		GraphViewSeriesStyle styleRnd;
@@ -116,21 +103,32 @@ public class GraphingActivity extends Activity {
 			if(j == 0)
 			{
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_ONE);
+				layout = (LinearLayout) findViewById(R.id.graph1);
+				if(thisGraph == null)
+					continue;
 			}
 			
 			else if(j == 1)
 			{
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_TWO);
+				layout = (LinearLayout) findViewById(R.id.graph2);
+					continue;
 			}
 			
 			else if(j == 2)
 			{
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_THREE);
+				layout = (LinearLayout) findViewById(R.id.graph3);
+				if(thisGraph == null)
+					continue;
 			}
 			
 			else if(j == 3)
 			{
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_FOUR);
+				layout = (LinearLayout) findViewById(R.id.graph4);
+				if(thisGraph == null)
+					continue;
 			}
 			
 			// random curve
@@ -154,31 +152,37 @@ public class GraphingActivity extends Activity {
 			graphView.setScalable(true);
 			
 			layout.addView(graphView);
+			
 			if(tooMuchEnergy(data) == 0)
 			{
-				energyNotification();
+				energyNotification(thisGraph, j);
 			}
 		}
 	}
 	
-	protected void energyNotification()
+	protected void energyNotification(String graphName, int graphPosition)
 	{
-		//TODO: Make message a string with the name of the applliance
-		int resID = getResources().getIdentifier(message, "drawable", getPackageName());
-		//ImageView image;
-		//image.setImageResource(resID);
-		
-		//TODO: Use this when message is a string
-		//.setSmallIcon(getResources().getIdentifier(message, "drawable", getPackageName()))
+		graphName = graphName.toLowerCase();
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.cordless)
+        		.setSmallIcon(getResources().getIdentifier(graphName, "drawable", getPackageName()))
                 .setContentTitle("Energy Usage is High")
-                .setContentText("Your " + message + " is using too much energy");
+                .setContentText("Your " + graphName + " is using too much energy");
 
         Intent resultIntent = new Intent(this, GraphingActivity.class);
+        Bundle extras = new Bundle();
+        
+        if(graphPosition == 0)
+        	extras.putString(FullscreenActivity.DEVICE_ONE, graphName.toUpperCase());
+        if(graphPosition == 1)
+        	extras.putString(FullscreenActivity.DEVICE_TWO, graphName.toUpperCase());
+        if(graphPosition == 2)
+        	extras.putString(FullscreenActivity.DEVICE_THREE, graphName.toUpperCase());
+        if(graphPosition == 3)
+        	extras.putString(FullscreenActivity.DEVICE_FOUR, graphName.toUpperCase());
+        
+        resultIntent.putExtras(extras);
 
-        resultIntent.putExtra(EXTRA_MESSAGE, message);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(GraphingActivity.class);
         stackBuilder.addNextIntent(resultIntent);
@@ -188,7 +192,7 @@ public class GraphingActivity extends Activity {
         
         mNotificationManager.notify(0, mBuilder.build());
         
-		Toast.makeText(this, "Your " + message + "  is using too much energy", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Your " + graphName + "  is using too much energy", Toast.LENGTH_LONG).show();
 		
 		usedTooMuchEnergy = true;
 	}
@@ -268,6 +272,7 @@ public class GraphingActivity extends Activity {
 		  case R.id.back:
 			if(usedTooMuchEnergy == true)
 		    {
+				//TODO: Get rid of compare button
 		       	intent.putExtra(EXTRA_MESSAGE, message);
 		       	startActivity(intent);
 		    }
