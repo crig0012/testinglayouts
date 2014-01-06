@@ -23,7 +23,16 @@ import com.example.testinglayouts.util.SystemUiHider;
  */
 public class FullscreenActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "com.fullscreenactivity.gbp.MESSAGE";
-	int lastClicked = 0;
+	
+	public final static String DEVICE_ONE = "com.fullscreenactivity.gbp.DEVICE_ONE";
+	public final static String DEVICE_TWO= "com.fullscreenactivity.gbp.DEVICE_TWO";
+	public final static String DEVICE_THREE = "com.fullscreenactivity.gbp.DEVICE_THREE";
+	public final static String DEVICE_FOUR = "com.fullscreenactivity.gbp.DEVICE_FOUR";
+
+	String selectedDeviceOne = "";
+	String selectedDeviceTwo = "";
+	String selectedDeviceThree = "";
+	String selectedDeviceFour = "";
 	/**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -146,13 +155,48 @@ public class FullscreenActivity extends Activity {
             	case 3:
             		Toast.makeText(FullscreenActivity.this, "Dryer", Toast.LENGTH_SHORT).show();
             		break;
+            	
+            	case 4:
+            		Toast.makeText(FullscreenActivity.this, "Exhaust Fan", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 5:
+            		Toast.makeText(FullscreenActivity.this, "Kettle", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 6:
+            		Toast.makeText(FullscreenActivity.this, "Microwave", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 7:
+            		Toast.makeText(FullscreenActivity.this, "Oven", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 8:
+            		Toast.makeText(FullscreenActivity.this, "Refrigerator", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 9:
+            		Toast.makeText(FullscreenActivity.this, "Toaster", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 10:
+            		Toast.makeText(FullscreenActivity.this, "Television", Toast.LENGTH_SHORT).show();
+            		break;
+            	
+            	case 11:
+            		Toast.makeText(FullscreenActivity.this, "Washer", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 12:
+            		Toast.makeText(FullscreenActivity.this, "Other Blender", Toast.LENGTH_SHORT).show();
+            		break;
             		
             		default:
             			Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             			break;
             	}
-                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                lastClicked = position;
+                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();                
             }
         });
         
@@ -165,11 +209,101 @@ public class FullscreenActivity extends Activity {
 		}
     }
 
+    private void setSelectedDevice(int position)
+    {
+    	switch(position)
+    	{
+    	case 0:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "BLENDER";
+    		break;
+    	case 1:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "CORDLESS";
+    		break;
+    	case 2:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "DISHWASHER";
+    		break;
+    	case 3:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "DRYER";
+    		break;
+    	case 4:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "EXHAUST_FAN";
+    		break;
+    	case 5:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "KETTLE";
+    		break;
+    	case 6:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "MICROWAVE";
+    		break;
+    	case 7:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "OVEN";
+    		break;
+    	case 8:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "REFRIGERATOR";
+    		break;
+    	case 9:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "TOASTER";
+    		break;
+    	case 10:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "TELEVISION";
+    		break;
+    	case 11:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "WASHER";
+    		break;
+    	case 12:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "OTHER_BLENDER";
+    		break;
+    	}
+    }
     public void sendMessage(View view) 
     {
     	Intent intent = new Intent(this, GraphingActivity.class);
-    	String message = Integer.toString(lastClicked);
-    	intent.putExtra(EXTRA_MESSAGE, message);
+    	Bundle extras = new Bundle();
+    	
+    	extras.putString(DEVICE_ONE, selectedDeviceOne);
+    	extras.putString(DEVICE_TWO, selectedDeviceTwo);
+    	extras.putString(DEVICE_THREE, selectedDeviceThree);
+    	extras.putString(DEVICE_FOUR, selectedDeviceFour);
+    	
+    	intent.putExtras(extras);
     	startActivity(intent);
     }
     

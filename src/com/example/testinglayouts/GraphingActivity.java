@@ -2,8 +2,8 @@ package com.example.testinglayouts;
 
 import java.lang.reflect.Array;
 
+import android.R;
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -14,16 +14,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.testinglayouts.util.SystemUiHider;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 
 /**
@@ -70,73 +68,9 @@ public class GraphingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Bundle extras = null;
+		
 		setContentView(R.layout.activity_graphing);
-
-		final View controlsView = findViewById(R.id.fullscreen_content_controls);
-		final View contentView = findViewById(R.id.fullscreen_content);
-
-		// Set up an instance of SystemUiHider to control the system UI for
-		// this activity.
-		/*mSystemUiHider = SystemUiHider.getInstance(this, contentView,
-				HIDER_FLAGS);
-		mSystemUiHider.setup();
-		mSystemUiHider
-				.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-					// Cached values.
-					int mControlsHeight;
-					int mShortAnimTime;
-
-					@Override
-					@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-					public void onVisibilityChange(boolean visible) {
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-							// If the ViewPropertyAnimator API is available
-							// (Honeycomb MR2 and later), use it to animate the
-							// in-layout UI controls at the bottom of the
-							// screen.
-							if (mControlsHeight == 0) {
-								mControlsHeight = controlsView.getHeight();
-							}
-							if (mShortAnimTime == 0) {
-								mShortAnimTime = getResources().getInteger(
-										android.R.integer.config_shortAnimTime);
-							}
-							controlsView
-									.animate()
-									.translationY(visible ? 0 : mControlsHeight)
-									.setDuration(mShortAnimTime);
-						} else {
-							// If the ViewPropertyAnimator APIs aren't
-							// available, simply show or hide the in-layout UI
-							// controls.
-							controlsView.setVisibility(visible ? View.VISIBLE
-									: View.GONE);
-						}
-
-						if (visible && AUTO_HIDE) {
-							// Schedule a hide().
-							delayedHide(AUTO_HIDE_DELAY_MILLIS);
-						}
-					}
-				});
-
-		// Set up the user interaction to manually show or hide the system UI.
-		contentView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (TOGGLE_ON_CLICK) {
-					mSystemUiHider.toggle();
-				} else {
-					mSystemUiHider.show();
-				}
-			}
-		});*/
-
-		// Upon interacting with UI controls, delay any scheduled hide()
-		// operations to prevent the jarring behavior of controls going away
-		// while interacting with the UI.
-		//findViewById(R.id.dummy_button).setOnTouchListener(
-		//	mDelayHideTouchListener);
 		
 		Intent intent = getIntent();
 		if(intent == null)
@@ -145,7 +79,7 @@ public class GraphingActivity extends Activity {
 		}
 		else
 		{
-			message = intent.getStringExtra(FullscreenActivity.EXTRA_MESSAGE);
+			extras = intent.getExtras();
 		}
 		
 		if(message == null)
@@ -154,7 +88,7 @@ public class GraphingActivity extends Activity {
 		if(message == null)
 			message = "0";
 		
-		whichGraph(Integer.parseInt(message));
+		whichGraph(extras);
 	}
 
 	@Override
@@ -167,7 +101,7 @@ public class GraphingActivity extends Activity {
 		delayedHide(100);
 	}
 
-	protected void whichGraph(int thisGraph)
+	protected void whichGraph(Bundle extras)
 	{
 		//TODO: Make an array of graphs, then call showGraph(thisGraph)?
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph1);
@@ -175,111 +109,30 @@ public class GraphingActivity extends Activity {
 		GraphViewSeries seriesRnd;
 		GraphViewSeriesStyle styleRnd;
 		double vSin = 0;
+		String thisGraph = "";
 		
-		
-		switch(thisGraph)
+		for(int j = 0; j < extras.size(); j++)
 		{
-		case 0:
-			data = new GraphViewData[] {
-				      new GraphViewData(1, 2.0d), new GraphViewData(2, 1.5d), new GraphViewData(3, 2.5d)
-				      , new GraphViewData(4, 1.0d), new GraphViewData(5, 1.0d), new GraphViewData(6, 1.0d)
-				      , new GraphViewData(7, 1.0d), new GraphViewData(8, 2.0d), new GraphViewData(9, 1.5d)
-				      , new GraphViewData(10, 2.5d), new GraphViewData(11, 1.0d), new GraphViewData(12, 1.0d)
-				      , new GraphViewData(13, 1.5d), new GraphViewData(14, 1.0d), new GraphViewData(15, 2.0d)
-				      , new GraphViewData(16, 1.5d), new GraphViewData(17, 2.5d), new GraphViewData(18, 1.0d)
-				      , new GraphViewData(19, 1.5d), new GraphViewData(20, 1.0d), new GraphViewData(21, 1.0d)
-				      , new GraphViewData(22, 2.0d), new GraphViewData(23, 1.5d), new GraphViewData(24, 2.5d)
-				      , new GraphViewData(25, 1.0d), new GraphViewData(26, 1.5d), new GraphViewData(27, 1.0d)
-				      , new GraphViewData(28, 1.0d)
-				};
-			
-			GraphViewSeries exampleSeries = new GraphViewSeries(data);
-			
-			graphView = new LineGraphView(
-				      this // context
-				      , "Blender" // heading
-				);
-			graphView.addSeries(exampleSeries); // data
-
-			// set view port, start=2, size=40
-			graphView.setViewPort(2, 40);
-			// optional - activate scaling / zooming
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			//graphViewTV.setHorizontalLabels(new String[] {"01:00", "02:00", "03:00","04:00", "05:00", "06:00", "07:00","08:00", "09:00", "10:00", "11:00", "12:00"});
-			graphView.setVerticalLabels(new String[] {"high", "middle", "low"});
-
-			tooMuchEnergy(data);
-			layout.addView(graphView);
-			
-			if(tooMuchEnergy(data) == 0)
+			if(j == 0)
 			{
-				energyNotification();
+				thisGraph = extras.getString(FullscreenActivity.DEVICE_ONE);
 			}
-			break;
 			
-		case 1:
-			// draw sin curve
-			int num = 150;
-			data = new GraphViewData[num];
-			double v=0;
-			for (int i=0; i<num; i++) {
-			   v += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(v) * 10);
-			}
-			graphView = new LineGraphView(
-			      this
-			      , "Cordless"
-			);
-			// add data
-			graphView.addSeries(new GraphViewSeries(data));
-			// set view port, start=2, size=40
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			// optional - activate scaling / zooming
-			graphView.setScalable(true);
-			//TODO: Do a for loop, where i < graphView.lengthof, an int to go into a switch that gets ticked every time, and the switch appends a 24hr clock time to the string
-			//graphViewOven.setHorizontalLabels(new String[] {"01:00", "02:00", "03:00","04:00", "05:00", "06:00", "07:00","08:00", "09:00", "10:00", "11:00", "12:00"});
-			graphView.setVerticalLabels(new String[] {"high", "middle", "low"});
-			 
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
+			else if(j == 1)
 			{
-				energyNotification();
+				thisGraph = extras.getString(FullscreenActivity.DEVICE_TWO);
 			}
-			break;
-
-		case 2:
-			// draw cos curve
-			int otherNum = 150;
-			data = new GraphViewData[otherNum];
-			double w=0;
-			for (int i=0; i<otherNum; i++) {
-			   w += 0.2;
-			   data[i] = new GraphViewData(i, Math.cos(w));
-			}
-			graphView = new LineGraphView(
-			      this
-			      , "Dishwasher"
-			);
-			// add data
-			graphView.addSeries(new GraphViewSeries(data));
-			// set view port, start=2, size=40
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			// optional - activate scaling / zooming
-			graphView.setScalable(true);
-			graphView.setHorizontalLabels(new String[] {"01:00", "02:00", "03:00","04:00", "05:00", "06:00", "07:00","08:00", "09:00", "10:00", "11:00", "12:00"});
-			graphView.setVerticalLabels(new String[] {"high", "middle", "low"});			
-			 
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
 			
-		case 3:
+			else if(j == 2)
+			{
+				thisGraph = extras.getString(FullscreenActivity.DEVICE_THREE);
+			}
+			
+			else if(j == 3)
+			{
+				thisGraph = extras.getString(FullscreenActivity.DEVICE_FOUR);
+			}
+			
 			// random curve
 			int numSin = 1000;
 			data = new GraphViewData[numSin];
@@ -290,12 +143,9 @@ public class GraphingActivity extends Activity {
 			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
 			}
 			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
+			seriesRnd = new GraphViewSeries(thisGraph, styleRnd, data);
 			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
+			graphView = new LineGraphView(this, thisGraph);
 				
 			// add data
 			graphView.addSeries(seriesRnd);
@@ -308,190 +158,6 @@ public class GraphingActivity extends Activity {
 			{
 				energyNotification();
 			}
-			break;
-			
-		case 4:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
-			
-		case 5:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
-			
-		case 6:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
-			
-		case 7:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
-			
-		case 8:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-			   data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(
-				      this
-				      , message
-				);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
-			
-		case 9:
-			// random curve
-			numSin = 1000;
-			data = new GraphViewData[numSin];
-			vSin =0;
-			for (int i=0; i<numSin; i++)
-			{
-				vSin += 0.2;
-				data[i] = new GraphViewData(i, Math.sin(Math.random()*vSin));
-			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries("Random curve", styleRnd, data);
-			 
-			graphView = new LineGraphView(this, message);
-				
-			// add data
-			graphView.addSeries(seriesRnd);
-			graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-			graphView.setScalable(true);
-			
-			layout.addView(graphView);
-			if(tooMuchEnergy(data) == 0)
-			{
-				energyNotification();
-			}
-			break;
 		}
 	}
 	
