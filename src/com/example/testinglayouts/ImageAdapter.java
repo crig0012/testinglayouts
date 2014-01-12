@@ -41,15 +41,37 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
+    
+    public void changeColour(String colour, String resName)
+    {
+    	if(resName == "")
+    		return;
+    	
+    	int idImage = mContext.getResources().getIdentifier(resName + "_" + colour, "drawable", mContext.getPackageName());
+    	String temp = null;
+    	
+    	for(int i = 0; i < mThumbIds.length; i++)
+    	{
+    		temp = mContext.getResources().getResourceEntryName(mThumbIds[i]);
+    		if(temp.contains(resName))
+    		{
+    			mThumbIds[i] = idImage;
+    		}
+    	}
+    }
 
+    //house last
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.blender, R.drawable.cordless,
-            R.drawable.dishwasher, R.drawable.dryer,
-            R.drawable.exhaustfan, R.drawable.kettle,
+            R.drawable.air_conditioner, R.drawable.blender,
+            R.drawable.car_charger, R.drawable.computer,
+            R.drawable.console, R.drawable.desk_fan,
+            R.drawable.dishwasher, R.drawable.exhaust_fan,
+            R.drawable.fridge, R.drawable.grill,
+            R.drawable.hair_dryer, R.drawable.iron,
             R.drawable.microwave, R.drawable.oven,
-            R.drawable.refrigerator, R.drawable.toaster,
-            R.drawable.television, R.drawable.washer,
-            R.drawable.blender
+            R.drawable.phone, R.drawable.printer,
+            R.drawable.television, R.drawable.toaster,
+            R.drawable.washer, R.drawable.house
     };
 }

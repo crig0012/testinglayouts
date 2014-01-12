@@ -22,6 +22,8 @@ import com.example.testinglayouts.util.SystemUiHider;
  * @see SystemUiHider
  */
 public class FullscreenActivity extends Activity {
+	ImageAdapter adapter = new ImageAdapter(this);
+	
 	public final static String EXTRA_MESSAGE = "com.fullscreenactivity.gbp.MESSAGE";
 	
 	public final static String DEVICE_ONE = "com.fullscreenactivity.gbp.DEVICE_ONE";
@@ -33,6 +35,8 @@ public class FullscreenActivity extends Activity {
 	String selectedDeviceTwo = null;
 	String selectedDeviceThree = null;
 	String selectedDeviceFour = null;
+	
+	String[] temp;
 	/**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -132,84 +136,138 @@ public class FullscreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         GridView gridview = (GridView) findViewById(R.id.gridView1);
-        gridview.setAdapter(new ImageAdapter(this));
-
+        gridview.setAdapter(adapter);
+        
+        Intent intent = getIntent();
+		Bundle extras = intent.getExtras();
+		//TODO: Get the app to save what is over and what isn't
+		//Maybe send the names of items over, and read them here. Send a different string array that is large enough to hold everything
+		//Maybe save them to a file, then read it? That was I can still have them there if the app gets closed
+		//Save as a key-value set? That way I can read the first part for the appliance name,and the second part for the colour. 1st part is key, 2nd is value
+		if(extras != null)
+		{
+			temp = extras.getStringArray(GraphingActivity.EXTRA_MESSAGE_DATA);
+		
+			if(temp != null)
+			{
+				for(int i = 0; i < temp.length; i++)
+				{
+					if(temp[i] != "EMPTY")
+						adapter.changeColour("red", temp[i]);
+				}
+			}
+		}
         gridview.setOnItemClickListener(new OnItemClickListener() 
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
             {
+            	//TODO: Get this to work
+            	//TODO: Change colour of images. Red, white, green(?). Use the tooMuchEnergy var to discern which colour to use
+            	//String name = getResources().getResourceEntryName((int) id);
+            	//Toast.makeText(FullscreenActivity.this, name, Toast.LENGTH_SHORT).show();
+            	
+            	
+            	
+            	//String temp = getResources().getResourceEntryName((int)id);
+            	//Toast.makeText(FullscreenActivity.this, "Air Conditioner" + temp, Toast.LENGTH_SHORT).show();;
+            	
             	switch(position)
             	{
             	case 0:
-            		Toast.makeText(FullscreenActivity.this, "Blender", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Air Conditioner", Toast.LENGTH_SHORT).show();
             		break;
             		
             	case 1:
-            		Toast.makeText(FullscreenActivity.this, "Cordless", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Blender", Toast.LENGTH_SHORT).show();
             		break;
             		
             	case 2:
-            		Toast.makeText(FullscreenActivity.this, "Dishwasher", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Car Charger", Toast.LENGTH_SHORT).show();
             		break;
             		
             	case 3:
-            		Toast.makeText(FullscreenActivity.this, "Dryer", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Computer", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 4:
-            		Toast.makeText(FullscreenActivity.this, "Exhaust Fan", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Console", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 5:
-            		Toast.makeText(FullscreenActivity.this, "Kettle", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Desk Fan", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 6:
-            		Toast.makeText(FullscreenActivity.this, "Microwave", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Dishwasher", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 7:
-            		Toast.makeText(FullscreenActivity.this, "Oven", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Exhaust Fan", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 8:
-            		Toast.makeText(FullscreenActivity.this, "Refrigerator", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Fridge", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 9:
-            		Toast.makeText(FullscreenActivity.this, "Toaster", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Grill", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 10:
-            		Toast.makeText(FullscreenActivity.this, "Television", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(FullscreenActivity.this, "Hair Dryer", Toast.LENGTH_SHORT).show();
             		break;
             	
             	case 11:
+            		Toast.makeText(FullscreenActivity.this, "Iron", Toast.LENGTH_SHORT).show();
+            		break;
+
+            	case 12:
+            		Toast.makeText(FullscreenActivity.this, "Microwave", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 13:
+            		Toast.makeText(FullscreenActivity.this, "Oven", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 14:
+            		Toast.makeText(FullscreenActivity.this, "Phone", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 15:
+            		Toast.makeText(FullscreenActivity.this, "Printer", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 16:
+            		Toast.makeText(FullscreenActivity.this, "Television", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 17:
+            		Toast.makeText(FullscreenActivity.this, "Toaster", Toast.LENGTH_SHORT).show();
+            		break;
+            		
+            	case 18:
             		Toast.makeText(FullscreenActivity.this, "Washer", Toast.LENGTH_SHORT).show();
             		break;
             		
-            	case 12:
-            		Toast.makeText(FullscreenActivity.this, "Other Blender", Toast.LENGTH_SHORT).show();
+            	case 19:
+            		Toast.makeText(FullscreenActivity.this, "Home Output", Toast.LENGTH_SHORT).show();
             		break;
             		
             		default:
             			Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             			break;
             	}
-                //Toast.makeText(FullscreenActivity.this, "" + position, Toast.LENGTH_SHORT).show();  
+            	  
             	setSelectedDevice(position);
             }
         });
-        
-        Intent intent = getIntent();
-		String message = intent.getStringExtra(FullscreenActivity.EXTRA_MESSAGE);
-		
-		if(message != "Good usage")
-		{
-			
-		}
     }
 
+    public ImageAdapter getAdapter()
+    {
+    	return adapter;
+    }
+    
     private void setSelectedDevice(int position)
     {
     	switch(position)
@@ -218,79 +276,121 @@ public class FullscreenActivity extends Activity {
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "BLENDER";
+    		selectedDeviceOne = "AIR_CONDITIONER";
     		break;
     	case 1:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "CORDLESS";
+    		selectedDeviceOne = "BLENDER";
     		break;
     	case 2:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "DISHWASHER";
+    		selectedDeviceOne = "CAR_CHARGER";
     		break;
     	case 3:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "DRYER";
+    		selectedDeviceOne = "COMPUTER";
     		break;
     	case 4:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "EXHAUST_FAN";
+    		selectedDeviceOne = "CONSOLE";
     		break;
     	case 5:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "KETTLE";
+    		selectedDeviceOne = "DESK_FAN";
     		break;
     	case 6:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "MICROWAVE";
+    		selectedDeviceOne = "DISHWASHER";
     		break;
     	case 7:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "OVEN";
+    		selectedDeviceOne = "EXHAUST_FAN";
     		break;
     	case 8:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "REFRIGERATOR";
+    		selectedDeviceOne = "FRIDGE";
     		break;
     	case 9:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "TOASTER";
+    		selectedDeviceOne = "GRILL";
     		break;
     	case 10:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "TELEVISION";
+    		selectedDeviceOne = "HAIR_DRYER";
     		break;
     	case 11:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "WASHER";
+    		selectedDeviceOne = "IRON";
     		break;
     	case 12:
     		selectedDeviceFour = selectedDeviceThree;
     		selectedDeviceThree = selectedDeviceTwo;
     		selectedDeviceTwo = selectedDeviceOne;
-    		selectedDeviceOne = "OTHER_BLENDER";
+    		selectedDeviceOne = "MICROWAVE";
+    		break;
+    	case 13:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "OVEN";
+    		break;
+    	case 14:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "PHONE";
+    		break;
+    	case 15:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "PRINTER";
+    		break;
+    	case 16:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "TELEVISION";
+    		break;
+    	case 17:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "TOASTER";
+    		break;
+    	case 18:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "WASHER";
+    		break;
+    	case 19:
+    		selectedDeviceFour = selectedDeviceThree;
+    		selectedDeviceThree = selectedDeviceTwo;
+    		selectedDeviceTwo = selectedDeviceOne;
+    		selectedDeviceOne = "HOUSE";
     		break;
     	}
     }

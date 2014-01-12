@@ -1,0 +1,6 @@
+device ID ( unique, generated when a new device is added )
+device name ( not unique, changeable )
+energy usage
+true/false for if usage is too high
+
+Change cover letter for the occassion, or make a new one for the restuarant
