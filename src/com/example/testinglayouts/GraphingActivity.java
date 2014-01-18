@@ -112,32 +112,56 @@ public class GraphingActivity extends Activity {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_ONE);
 				layout = (LinearLayout) findViewById(R.id.graph1);
 				layout.removeAllViews();
+				
 				if (thisGraph == null)
 					continue;
+				
+				if(thisGraph.contains("_white"))
+					thisGraph = thisGraph.replace("_white", "");
+				if(thisGraph.contains("_red"))
+					thisGraph = thisGraph.replace("_red", "");
 			}
 
 			else if (j == 1) {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_TWO);
 				layout = (LinearLayout) findViewById(R.id.graph2);
 				layout.removeAllViews();
+				
 				if (thisGraph == null)
 					continue;
+				
+				if(thisGraph.contains("_white"))
+					thisGraph = thisGraph.replace("_white", "");
+				if(thisGraph.contains("_red"))
+					thisGraph = thisGraph.replace("_red", "");
 			}
 
 			else if (j == 2) {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_THREE);
 				layout = (LinearLayout) findViewById(R.id.graph3);
 				layout.removeAllViews();
+				
 				if (thisGraph == null)
 					continue;
+				
+				if(thisGraph.contains("_white"))
+					thisGraph = thisGraph.replace("_white", "");
+				if(thisGraph.contains("_red"))
+					thisGraph = thisGraph.replace("_red", "");
 			}
 
 			else if (j == 3) {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_FOUR);
 				layout = (LinearLayout) findViewById(R.id.graph4);
 				layout.removeAllViews();
+
 				if (thisGraph == null)
 					continue;
+				
+				if(thisGraph.contains("_white"))
+					thisGraph = thisGraph.replace("_white", "");
+				if(thisGraph.contains("_red"))
+					thisGraph = thisGraph.replace("_red", "");
 			}
 
 			graphView = new LineGraphView(this, thisGraph);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/sortBy" android:title="Sort">
+        <menu>
+            <item android:id="@+id/sortByName" android:titleCondensed="Name" android:title="Sort by name"/>
+            <item android:id="@+id/sortByGroup" android:titleCondensed="Group" android:title="Sort by group"/>
+            <item android:id="@+id/sortByType" android:titleCondensed="Type" android:title="Sort by type"/>
+            <item android:id="@+id/sortByUsage" android:titleCondensed="Usage" android:title="Sort by energy usage"/>
+        </menu>
+    </item>
+    
+    
+
+</menu>

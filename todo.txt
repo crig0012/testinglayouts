@@ -4,3 +4,38 @@ energy usage
 true/false for if usage is too high
 
 Change cover letter for the occassion, or make a new one for the restuarant
+
+
+if (resName == "")
+			return;
+		
+		if(colour == "")
+		{
+			int idImage = mContext.getResources().getIdentifier(
+					resName + colour, "drawable", mContext.getPackageName());
+			String temp = null;
+
+			for (int i = 0; i < mThumbIds.size(); i++) {
+				temp = mContext.getResources().getResourceEntryName(mThumbIds.get(i));
+				if (temp.contains(resName)) {
+					mThumbIds.set(i, idImage);
+				}
+			}
+		}
+
+		int idImage = mContext.getResources().getIdentifier(
+				resName + "_" + colour, "drawable", mContext.getPackageName());
+		String temp = null;
+
+		for (int i = 0; i < mThumbIds.size(); i++) {
+			temp = mContext.getResources().getResourceEntryName(mThumbIds.get(i));
+			if (temp.contains(resName)) {
+				mThumbIds.set(i, idImage);
+			}
+
+		for (int i = 0; i < mThumbIds.size(); i++) {
+			temp = mContext.getResources().getResourceEntryName(mThumbIds.get(i));
+			if (temp.contains(resName)) {
+				mThumbIds.set(i, idImage);
+			}
+		}
