@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context=".FullscreenActivity" >
+    tools:context=".AddItemActivity" >
 
     <!--
          The primary full-screen view. This can be replaced with whatever view
@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="415dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="@string/dummy_content"
@@ -48,11 +48,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/dummy_button" 
-                android:onClick="sendMessage" />
+                android:text="@string/dummy_button"
+                android:onClick="addItem" />
         </LinearLayout>
 
-       <GridView
+        <GridView
            android:id="@+id/gridView1"
            android:layout_width="match_parent"
            android:layout_height="520dp"
@@ -62,6 +62,9 @@
            tools:listitem="@android:layout/simple_list_item_checked" >
         </GridView>
 
+        
     </FrameLayout>
+
+  
 
 </FrameLayout>

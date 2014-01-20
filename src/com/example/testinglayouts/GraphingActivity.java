@@ -1,5 +1,7 @@
 package com.example.testinglayouts;
 
+import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 
 import android.app.Activity;
@@ -77,11 +79,10 @@ public class GraphingActivity extends Activity {
 		setContentView(R.layout.activity_graphing);
 
 		excessiveItems = new String[4];
-		for(int i = 0; i < excessiveItems.length; i++)
-		{
+		for (int i = 0; i < excessiveItems.length; i++) {
 			excessiveItems[i] = "EMPTY";
 		}
-		
+
 		Intent intent = getIntent();
 		extras = intent.getExtras();
 
@@ -100,6 +101,9 @@ public class GraphingActivity extends Activity {
 
 	protected void whichGraph(Bundle extras) {
 		// TODO: Make an array of graphs, then call showGraph(thisGraph)?
+		// TODO: Remove the compare button, make a menu, make a button called
+		// compare, and a submenu for what to compare to. Make a button to witch
+		// grpah type
 		LinearLayout layout = null;
 		GraphView graphView = null;
 		GraphViewSeries seriesRnd;
@@ -112,13 +116,13 @@ public class GraphingActivity extends Activity {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_ONE);
 				layout = (LinearLayout) findViewById(R.id.graph1);
 				layout.removeAllViews();
-				
+
 				if (thisGraph == null)
 					continue;
-				
-				if(thisGraph.contains("_white"))
+
+				if (thisGraph.contains("_white"))
 					thisGraph = thisGraph.replace("_white", "");
-				if(thisGraph.contains("_red"))
+				if (thisGraph.contains("_red"))
 					thisGraph = thisGraph.replace("_red", "");
 			}
 
@@ -126,13 +130,13 @@ public class GraphingActivity extends Activity {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_TWO);
 				layout = (LinearLayout) findViewById(R.id.graph2);
 				layout.removeAllViews();
-				
+
 				if (thisGraph == null)
 					continue;
-				
-				if(thisGraph.contains("_white"))
+
+				if (thisGraph.contains("_white"))
 					thisGraph = thisGraph.replace("_white", "");
-				if(thisGraph.contains("_red"))
+				if (thisGraph.contains("_red"))
 					thisGraph = thisGraph.replace("_red", "");
 			}
 
@@ -140,13 +144,13 @@ public class GraphingActivity extends Activity {
 				thisGraph = extras.getString(FullscreenActivity.DEVICE_THREE);
 				layout = (LinearLayout) findViewById(R.id.graph3);
 				layout.removeAllViews();
-				
+
 				if (thisGraph == null)
 					continue;
-				
-				if(thisGraph.contains("_white"))
+
+				if (thisGraph.contains("_white"))
 					thisGraph = thisGraph.replace("_white", "");
-				if(thisGraph.contains("_red"))
+				if (thisGraph.contains("_red"))
 					thisGraph = thisGraph.replace("_red", "");
 			}
 
@@ -157,10 +161,10 @@ public class GraphingActivity extends Activity {
 
 				if (thisGraph == null)
 					continue;
-				
-				if(thisGraph.contains("_white"))
+
+				if (thisGraph.contains("_white"))
 					thisGraph = thisGraph.replace("_white", "");
-				if(thisGraph.contains("_red"))
+				if (thisGraph.contains("_red"))
 					thisGraph = thisGraph.replace("_red", "");
 			}
 
@@ -232,8 +236,8 @@ public class GraphingActivity extends Activity {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
 				.setSmallIcon(
-						getResources().getIdentifier(graphName + "_white", "drawable",
-								getPackageName()))
+						getResources().getIdentifier(graphName + "_white",
+								"drawable", getPackageName()))
 				.setContentTitle("Energy Usage is High")
 				.setContentText(
 						"Your " + graphName + " is using too much energy");
@@ -270,16 +274,14 @@ public class GraphingActivity extends Activity {
 				"Your " + graphName + "  is using too much energy",
 				Toast.LENGTH_SHORT).show();
 
-		for(int i = 0; i < excessiveItems.length; i++)
-		{
-			if(excessiveItems[i] == "EMPTY")
-			{
+		for (int i = 0; i < excessiveItems.length; i++) {
+			if (excessiveItems[i] == "EMPTY") {
 				excessiveItems[i] = graphName;
 				break;
 			}
 		}
-		
-		usedTooMuchEnergy = true; 
+
+		usedTooMuchEnergy = true;
 	}
 
 	protected int tooMuchEnergy(GraphViewData[] checkThis) {
@@ -320,6 +322,23 @@ public class GraphingActivity extends Activity {
 
 		// return numberHolder;
 	}
+	
+/*
+ * String appendText = newY + "|";// Stopped using new lines
+												// for
+												// pipes "|"
+												// Environment.NewLine;
+				try {
+					outputStream = mContext.openFileOutput(name,
+							mContext.MODE_APPEND);
+					 OutputStreamWriter osw = new OutputStreamWriter(outputStream);
+				        osw.write(GRAPHINFO);
+				        osw.flush();
+				        osw.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+ */
 
 	public void sendMessage(View view) {
 		Intent intent = new Intent(this, FullscreenActivity.class);
@@ -327,7 +346,6 @@ public class GraphingActivity extends Activity {
 		double numbersX[] = new double[data.length];
 		double numbersY[] = new double[data.length];
 		Bundle extraStuff = new Bundle();
-		
 
 		for (int i = 0; i < data.length; i++) {
 			numbersX[i] = data[i].getX();
@@ -340,8 +358,9 @@ public class GraphingActivity extends Activity {
 			break;
 
 		case R.id.back:
-			//TODO: Add this back in, also put graphName in the intent, then in FA hve it change the icon to red
-			//intent.putExtra(EXTRA_MESSAGE, usedTooMuchEnergy);
+			// TODO: Add this back in, also put graphName in the intent, then in
+			// FA hve it change the icon to red
+			// intent.putExtra(EXTRA_MESSAGE, usedTooMuchEnergy);
 			extras.putStringArray(EXTRA_MESSAGE_DATA, excessiveItems);
 			intent.putExtras(extras);
 
