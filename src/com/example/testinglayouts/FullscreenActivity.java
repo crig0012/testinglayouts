@@ -1,10 +1,13 @@
 package com.example.testinglayouts;
 
+import java.io.File;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +28,7 @@ import com.example.testinglayouts.util.SystemUiHider;
  * @see SystemUiHider
  */
 public class FullscreenActivity extends Activity {
-	ImageAdapter adapter = new ImageAdapter(this);
+	ImageAdapter adapter;
 
 	Boolean isAdding = false;
 
@@ -52,7 +55,9 @@ public class FullscreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fullscreen);
-
+		
+		adapter = new ImageAdapter(this, getFilesDir().toString(), false);
+		
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
 		
@@ -63,7 +68,6 @@ public class FullscreenActivity extends Activity {
 			if(tempStr != null)
 			{
 				adapter.addItem(tempStr);
-				adapter.Save();
 			}
 			if (temp != null) {
 				for (int i = 0; i < temp.length; i++) {
@@ -129,11 +133,23 @@ public class FullscreenActivity extends Activity {
 			else
 				item.setChecked(true);
 			return true;
+		case R.id.delete:
+			deleteThings();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
+	public void deleteThings()
+	{
+		String filePath = "/GreenButtonPrototypeGraphs/";
+		final File path = new File(Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + filePath);
+		adapter.deleteDirectory(path);
+		gridview.invalidateViews();
+	}
+	
 	private void setSelectedDevice(int position) {
 		// TODO: Make the selected items into an array, this will simplify SO
 		// much

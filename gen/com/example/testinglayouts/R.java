@@ -107,6 +107,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int action_settings=0x7f09000b;
         public static final int back=0x7f09000a;
+        public static final int delete=0x7f090011;
         public static final int dummy_button=0x7f090002;
         public static final int empty_space=0x7f090009;
         public static final int fullscreen_content=0x7f090000;
@@ -134,6 +135,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sortmenu=0x7f080001;
     }
     public static final class string {
+        public static final int Back=0x7f06000c;
+        public static final int Create=0x7f06000b;
+        public static final int Graph=0x7f06000d;
         public static final int Test_Button_1=0x7f060003;
         public static final int action_settings=0x7f060009;
         public static final int app_name=0x7f060000;

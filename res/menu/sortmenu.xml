@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/sortBy" android:title="Sort">
+
+    <item
+        android:id="@+id/sortBy"
+        android:title="Sort">
         <menu>
-            <item android:id="@+id/sortByName" android:titleCondensed="Name" android:title="Sort by name"/>
-            <item android:id="@+id/sortByGroup" android:titleCondensed="Group" android:title="Sort by group"/>
-            <item android:id="@+id/sortByType" android:titleCondensed="Type" android:title="Sort by type"/>
-            <item android:id="@+id/sortByUsage" android:titleCondensed="Usage" android:title="Sort by energy usage"/>
+            <item
+                android:id="@+id/sortByName"
+                android:title="Sort by name"
+                android:titleCondensed="Name"/>
+            <item
+                android:id="@+id/sortByGroup"
+                android:title="Sort by group"
+                android:titleCondensed="Group"/>
+            <item
+                android:id="@+id/sortByType"
+                android:title="Sort by type"
+                android:titleCondensed="Type"/>
+            <item
+                android:id="@+id/sortByUsage"
+                android:title="Sort by energy usage"
+                android:titleCondensed="Usage"/>
+            <item
+                android:id="@+id/delete"
+                android:title="Delete the directory, for testing"
+                android:titleCondensed="Delete"/>
         </menu>
     </item>
-    
-    
-
-</menu>
+    <item
+        android:id="@+id/delete"
+        android:title="Delete the directory, for testing"
+        android:titleCondensed="Delete">
+    </item>
+</menu>

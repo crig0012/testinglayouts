@@ -43,34 +43,16 @@ public class GraphingActivity extends Activity {
 	private boolean usedTooMuchEnergy = false;
 	private boolean regionalComparison = true;
 	private GraphViewData[] data;
+	private GraphViewData[] dataOnPeak;
+	private GraphViewData[] dataOnMid;
+	private GraphViewData[] dataOffPeak;// Make a dplain data?
 	private String message = "";
 	private String[] excessiveItems;
 	public final static String EXTRA_MESSAGE = "com.graphingactivity.gbp.MESSAGE";
 	public final static String EXTRA_MESSAGE_DATA = "com.graphingactivity.gbp.MESSAGE_DATA";
 	private static final boolean AUTO_HIDE = true;
 	Bundle extras = null;
-
-	/**
-	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-	 * user interaction before hiding the system UI.
-	 */
-	private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-	/**
-	 * If set, will toggle the system UI visibility upon interaction. Otherwise,
-	 * will show the system UI visibility upon interaction.
-	 */
-	private static final boolean TOGGLE_ON_CLICK = true;
-
-	/**
-	 * The flags to pass to {@link SystemUiHider#getInstance}.
-	 */
-	private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
-	/**
-	 * The instance of the {@link SystemUiHider} for this activity.
-	 */
-	// private SystemUiHider mSystemUiHider;
+	private double thisTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +69,8 @@ public class GraphingActivity extends Activity {
 		extras = intent.getExtras();
 
 		whichGraph(extras);
+		//TODO: why does this break? Try only one series again
+		String wut = "";
 	}
 
 	@Override
@@ -106,8 +90,12 @@ public class GraphingActivity extends Activity {
 		// grpah type
 		LinearLayout layout = null;
 		GraphView graphView = null;
-		GraphViewSeries seriesRnd;
-		GraphViewSeriesStyle styleRnd;
+		GraphViewSeries seriesOnPeak;
+		GraphViewSeries seriesOnMid;
+		GraphViewSeries seriesOffPeak;
+		GraphViewSeriesStyle styleOnPeak;
+		GraphViewSeriesStyle styleOnMid;
+		GraphViewSeriesStyle styleOffPeak;
 		double vSin = 0;
 		String thisGraph = "";
 
@@ -171,15 +159,37 @@ public class GraphingActivity extends Activity {
 			graphView = new LineGraphView(this, thisGraph);
 
 			// random curve
-			int numSin = 1000;
-			data = new GraphViewData[numSin];
+			int numSin = 24;
+			thisTime = 7;
+			dataOnPeak = new GraphViewData[numSin];
+			dataOnMid = new GraphViewData[numSin];
+			dataOffPeak = new GraphViewData[numSin];
 			vSin = 0;
-			for (int i = 0; i < numSin; i++) {
+			for (double i = 0; i < numSin; i++) {
 				vSin += 0.2;
-				data[i] = new GraphViewData(i, Math.sin(Math.random() * vSin));
+				if ((i >= 7 && i < 11) || (i >= 17 && i < 19))
+					// if (whatTimeIsIt(i) == 7 || whatTimeIsIt(i) == 17) {
+					dataOnPeak[(int) i] = new GraphViewData(i, Math.sin(Math
+							.random() * vSin));
+				else if (i >= 11 && i < 17)
+					// else if (whatTimeIsIt(i) == 11) {
+					dataOnMid[(int) i] = new GraphViewData(i, Math.sin(Math
+							.random() * vSin));
+				else
+				// else if (whatTimeIsIt(i) == 19) {
+				dataOffPeak[(int) i] = new GraphViewData(i, Math.sin(Math
+						.random() * vSin));
+
 			}
-			styleRnd = new GraphViewSeriesStyle(Color.rgb(90, 90, 90), 5);
-			seriesRnd = new GraphViewSeries(thisGraph, styleRnd, data);
+			styleOnPeak = new GraphViewSeriesStyle(Color.rgb(127, 255, 0), 5);
+			styleOnMid = new GraphViewSeriesStyle(Color.rgb(255, 255, 0), 5);
+			styleOffPeak = new GraphViewSeriesStyle(Color.rgb(127, 255, 0), 5);
+
+			seriesOnPeak = new GraphViewSeries(thisGraph, styleOnPeak,
+					dataOnPeak);
+			seriesOnMid = new GraphViewSeries(thisGraph, styleOnMid, dataOnMid);
+			seriesOffPeak = new GraphViewSeries(thisGraph, styleOffPeak,
+					dataOnPeak);
 
 			if (regionalComparison == true) {
 				data = new GraphViewData[numSin];
@@ -215,20 +225,40 @@ public class GraphingActivity extends Activity {
 				graphView.addSeries(seriesCos);
 			}
 
-			graphView.addSeries(seriesRnd);
+			graphView.addSeries(seriesOnPeak);
+			graphView.addSeries(seriesOnMid);
+			graphView.addSeries(seriesOffPeak);
 			graphView.setViewPort(2, 40);
 			graphView.setScrollable(true);
 			graphView.setScalable(true);
-			graphView.setShowLegend(TOGGLE_ON_CLICK);
+			// graphView.setShowLegend(true);
 			graphView.setLegendAlign(LegendAlign.BOTTOM);
 			graphView.getGraphViewStyle().setLegendWidth(400);
 
 			layout.addView(graphView);
 
+			// private GraphViewData[] dataOffPeak; Make this a collection of
+			// all the others
 			if (tooMuchEnergy(data) == 0) {
 				energyNotification(thisGraph, j);
 			}
 		}
+	}
+
+	protected double whatTimeIsIt(double isItThisTime) {
+
+		if ((isItThisTime / 24) - (7 / 24) == 1)
+			thisTime = 7;
+		else if ((isItThisTime / 24) - (11 / 24) == 1)
+			thisTime = 11;
+		else if ((isItThisTime / 24) - (17 / 24) == 1)
+			thisTime = 17;
+		else if ((isItThisTime / 24) - (19 / 24) == 1)
+			thisTime = 7;
+		else
+			thisTime = thisTime;
+
+		return thisTime;
 	}
 
 	protected void energyNotification(String graphName, int graphPosition) {
@@ -322,35 +352,27 @@ public class GraphingActivity extends Activity {
 
 		// return numberHolder;
 	}
-	
-/*
- * String appendText = newY + "|";// Stopped using new lines
-												// for
-												// pipes "|"
-												// Environment.NewLine;
-				try {
-					outputStream = mContext.openFileOutput(name,
-							mContext.MODE_APPEND);
-					 OutputStreamWriter osw = new OutputStreamWriter(outputStream);
-				        osw.write(GRAPHINFO);
-				        osw.flush();
-				        osw.close();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
- */
+
+	/*
+	 * String appendText = newY + "|";// Stopped using new lines // for // pipes
+	 * "|" // Environment.NewLine; try { outputStream =
+	 * mContext.openFileOutput(name, mContext.MODE_APPEND); OutputStreamWriter
+	 * osw = new OutputStreamWriter(outputStream); osw.write(GRAPHINFO);
+	 * osw.flush(); osw.close(); } catch (FileNotFoundException e) {
+	 * e.printStackTrace(); }
+	 */
 
 	public void sendMessage(View view) {
 		Intent intent = new Intent(this, FullscreenActivity.class);
 		Intent toCompare = new Intent(this, CompareActivity.class);
-		double numbersX[] = new double[data.length];
-		double numbersY[] = new double[data.length];
+		// double numbersX[] = new double[data.length];
+		// double numbersY[] = new double[data.length];
 		Bundle extraStuff = new Bundle();
 
-		for (int i = 0; i < data.length; i++) {
-			numbersX[i] = data[i].getX();
-			numbersY[i] = data[i].getY();
-		}
+		/*
+		 * for (int i = 0; i < data.length; i++) { numbersX[i] = data[i].getX();
+		 * numbersY[i] = data[i].getY(); }
+		 */
 		switch (view.getId()) {
 		case R.id.dummy_button:
 			regionalComparison = !regionalComparison;
