@@ -2,10 +2,14 @@ package com.example.testinglayouts;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.os.Environment;
@@ -83,10 +87,56 @@ public class ImageAdapter extends BaseAdapter {
 		return false;
 	}
 
-	//public String getMyGraph(String forMe)
-	//{//TODO: Bar vs line
-		 //TODO: GET THIS TO WORK
-//	}
+	private int countCharsBuffer(File f) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				new FileInputStream(f)));
+		int charCount = 0;
+		char[] cbuf = new char[1024];
+		int read = 0;
+		while ((read = reader.read(cbuf)) > -1) {
+			charCount += read;
+		}
+		reader.close();
+		return charCount;
+	}
+
+	public String[] getMyGraph(String forMe) {// TODO: Bar vs line
+												// TODO: GET THIS TO WORK
+		final File file = new File(Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + filePath + forMe);
+		int howBig;
+		try {
+			howBig = countCharsBuffer(file);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			howBig = 1000000;
+		}
+		String[] toRet = new String[howBig];
+		StringBuilder text = new StringBuilder();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+			// TODO: Change this to read char by char
+			while ((line = br.readLine()) != null) {
+				text.append(line);
+				if (line.contains("|")) {
+					StringTokenizer tokens = new StringTokenizer(
+							text.toString(), "|");
+					for (int i = 0; i < tokens.countTokens(); i++) {
+						toRet[i] = tokens.nextToken();
+					}
+				}
+			}
+
+			br.close();
+		} catch (IOException e) {
+			// You'll need to add proper error handling here
+		}
+		return toRet;
+	}
+
 	private String readFromFile(String fileName) {
 		final File file = new File(Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + filePath + fileName);
@@ -179,22 +229,44 @@ public class ImageAdapter extends BaseAdapter {
 				fos.write(body.getBytes());
 				fos.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			/*
-			 * // int name = mThumbIds.get(i); String name =
-			 * mContext.getResources().getResourceEntryName( mThumbIds.get(i));
-			 * //name = filePath + name;
-			 * 
-			 * // String temp = getName(Integer.parseInt(name)); String
-			 * graphName = name + "|"; // String graphName = "TEMP"; if
-			 * (fileExistance(name) == false) { try { FileOutputStream
-			 * outputStream = mContext.openFileOutput( name,
-			 * mContext.MODE_PRIVATE); outputStream.write(graphName.getBytes());
-			 * outputStream.close(); } catch (Exception e) {
-			 * e.printStackTrace(); } }
-			 */
+		}
+	}
+
+	public void Save(int[] graphNumbers) {
+		for (int i = 0; i < mThumbIds.size(); i++) {
+			FileOutputStream fos = null;
+			try {
+				final File dir = new File(Environment
+						.getExternalStorageDirectory().getAbsolutePath()
+						+ filePath);
+
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+
+				final File myFile = new File(dir, mThumbIds.get(i) + ".txt");
+				if (myFile.toString().contains("add_item")
+						|| myFile.toString().contains("house"))
+					continue;
+
+				if (!myFile.exists()) {
+					myFile.createNewFile();
+				}
+
+				FileWriter fw = new FileWriter(myFile, true);
+				for (int j = 0; j < graphNumbers.length; j++) {
+					try {
+						fw.write(graphNumbers[i] + "|");
+					} catch (IOException ioe) {
+						System.err.println("IOException: " + ioe.getMessage());
+					}
+				}
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -286,13 +358,10 @@ public class ImageAdapter extends BaseAdapter {
 
 	public void addItem(String resName) {
 		// TODO: Add item name
-		// TODO: Add second array, the one that will display all the images. The
-		// other holds them.
-		// mThumbIds[mThumbIds.length+1];
-		// mThumbIds.add(null);
 		Integer idImage = mContext.getResources().getIdentifier(resName,
 				"drawable", mContext.getPackageName());
 
+//		int[] randomNumbers
 		mThumbIds.add(idImage);
 
 		Save();

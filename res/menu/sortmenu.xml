@@ -28,8 +28,8 @@
         </menu>
     </item>
     <item
-        android:id="@+id/delete"
-        android:title="Delete the directory, for testing"
-        android:titleCondensed="Delete">
+        android:id="@+id/testTools"
+        android:title="Testing Tools"
+        android:titleCondensed="Test">
     </item>
 </menu>

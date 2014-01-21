@@ -123,6 +123,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sortByName=0x7f09000d;
         public static final int sortByType=0x7f09000f;
         public static final int sortByUsage=0x7f090010;
+        public static final int testTools=0x7f090012;
     }
     public static final class layout {
         public static final int activity_add_item=0x7f030000;

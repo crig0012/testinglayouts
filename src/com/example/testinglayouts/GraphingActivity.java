@@ -84,9 +84,6 @@ public class GraphingActivity extends Activity {
 
 	protected void whichGraph(Bundle extras) {
 		// TODO: Make an array of graphs, then call showGraph(thisGraph)?
-		// TODO: Remove the compare button, make a menu, make a button called
-		// compare, and a submenu for what to compare to. Make a button to witch
-		// grpah type
 		LinearLayout layout = null;
 		GraphView graphView = null;
 		GraphViewSeries seriesOnPeak;
@@ -156,9 +153,44 @@ public class GraphingActivity extends Activity {
 			}
 
 			graphView = new LineGraphView(this, thisGraph);
-			
-//			adapter.
+			// TODO: Fake some data, test this
+			/*
+			 * String[] graphNumbersString = adapter.getMyGraph(thisGraph);
+			 * boolean gettingNumbers = false; String timeString = null; int
+			 * timeInt = -1;
+			 * 
+			 * for (int i = 0; i < graphNumbersString.length; i++)// Maybe int i
+			 * = // 2? { if (graphNumbersString[i].contains("START_TIME"))
+			 * gettingNumbers = false;
+			 * 
+			 * if (gettingNumbers == true) { if (timeInt == -1) timeInt = i;
+			 * dataOnPeak[i] = new GraphViewData(timeInt,
+			 * Integer.parseInt(graphNumbersString[i])); timeInt += 1; // TODO
+			 * // if(timeInt >= 2400) // if(timeInt.lastTwoDigits >= 60 } if
+			 * (gettingNumbers == false &&
+			 * graphNumbersString[i].contains("START_TIME")) { timeString =
+			 * graphNumbersString[i]; timeString =
+			 * timeString.replace("START_TIME", ""); timeInt =
+			 * Integer.parseInt(timeString); gettingNumbers = true; } }
+			 */
 
+			/*
+			 * TODO: Try out this, set timer to six seconds, use it for
+			 * prototype mTimer2 = new Runnable() {
+			 * 
+			 * @Override public void run() { graph2LastXValue += 1d;
+			 * exampleSeries2.appendData(new GraphViewData(graph2LastXValue,
+			 * getRandom()), true, 10); mHandler.postDelayed(this, 200); } };
+			 * mHandler.postDelayed(mTimer2, 1000);
+			 */
+
+			// TODO: For axis, can I figure out what is being displayed? If I
+			// can, create a function ( similar to whatTimeIsIt() ) and send it
+			// the label and have it converted into time. Look at the custom
+			// label formatter on his site
+
+			// TODO: Find out how to get pinch levels, use that to change the x
+			// axis
 			// random curve
 			int numSin = 24;
 			thisTime = 7;
@@ -187,7 +219,7 @@ public class GraphingActivity extends Activity {
 				// Math.abs(Math.sin(Math.random() * vSin)));
 				// dataOnMid[(int) i] = new GraphViewData(i, 0);
 				// }
-			}//TODO: Figure this out
+			}// TODO: Figure this out
 			styleOnPeak = new GraphViewSeriesStyle(Color.RED, 5);
 			// styleOnMid = new GraphViewSeriesStyle(Color.YELLOW, 5);
 			// styleOffPeak = new GraphViewSeriesStyle(Color.GREEN, 5);
@@ -243,7 +275,7 @@ public class GraphingActivity extends Activity {
 			graphView.setShowLegend(true);
 			graphView.setLegendAlign(LegendAlign.BOTTOM);
 			graphView.getGraphViewStyle().setLegendWidth(400);
-//			graphView.setBackgroundColor(Color.BLUE);
+			// graphView.setBackgroundColor(Color.BLUE);
 			graphView.setBackgroundColor(Color.rgb(80, 30, 30));
 
 			layout.addView(graphView);
