@@ -1,7 +1,5 @@
 package com.example.testinglayouts;
 
-import java.io.FileNotFoundException;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 
 import android.app.Activity;
@@ -14,7 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
-import android.transition.ChangeBounds;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -53,6 +50,7 @@ public class GraphingActivity extends Activity {
 	private static final boolean AUTO_HIDE = true;
 	Bundle extras = null;
 	private double thisTime;
+	ImageAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +58,7 @@ public class GraphingActivity extends Activity {
 
 		setContentView(R.layout.activity_graphing);
 
+		adapter = new ImageAdapter(this, false);
 		excessiveItems = new String[4];
 		for (int i = 0; i < excessiveItems.length; i++) {
 			excessiveItems[i] = "EMPTY";
@@ -69,7 +68,7 @@ public class GraphingActivity extends Activity {
 		extras = intent.getExtras();
 
 		whichGraph(extras);
-		//TODO: why does this break? Try only one series again
+		// TODO: why does this break? Try only one series again
 		String wut = "";
 	}
 
@@ -157,6 +156,8 @@ public class GraphingActivity extends Activity {
 			}
 
 			graphView = new LineGraphView(this, thisGraph);
+			
+//			adapter.
 
 			// random curve
 			int numSin = 24;
@@ -167,41 +168,52 @@ public class GraphingActivity extends Activity {
 			vSin = 0;
 			for (double i = 0; i < numSin; i++) {
 				vSin += 0.2;
-				if ((i >= 7 && i < 11) || (i >= 17 && i < 19))
-					// if (whatTimeIsIt(i) == 7 || whatTimeIsIt(i) == 17) {
-					dataOnPeak[(int) i] = new GraphViewData(i, Math.sin(Math
-							.random() * vSin));
-				else if (i >= 11 && i < 17)
-					// else if (whatTimeIsIt(i) == 11) {
-					dataOnMid[(int) i] = new GraphViewData(i, Math.sin(Math
-							.random() * vSin));
-				else
+				// if ((i >= 7 && i < 11) || (i >= 17 && i < 19)) {
+				// if (whatTimeIsIt(i) == 7 || whatTimeIsIt(i) == 17) {
+				dataOnPeak[(int) i] = new GraphViewData(i, Math.abs(Math
+						.sin(Math.random() * vSin)));
+				// dataOnMid[(int) i] = new GraphViewData(i, 0);
+				// dataOffPeak[(int) i] = new GraphViewData(i, 0);
+				// } else if (i >= 11 && i < 17) {
+				// else if (whatTimeIsIt(i) == 11) {
+				// dataOnPeak[(int) i] = new GraphViewData(i, 0);
+				// dataOnMid[(int) i] = new GraphViewData(i,
+				// Math.abs(Math.sin(Math.random() * vSin)));
+				// dataOffPeak[(int) i] = new GraphViewData(i, 0);
+				// } else {
 				// else if (whatTimeIsIt(i) == 19) {
-				dataOffPeak[(int) i] = new GraphViewData(i, Math.sin(Math
-						.random() * vSin));
-
-			}
-			styleOnPeak = new GraphViewSeriesStyle(Color.rgb(127, 255, 0), 5);
-			styleOnMid = new GraphViewSeriesStyle(Color.rgb(255, 255, 0), 5);
-			styleOffPeak = new GraphViewSeriesStyle(Color.rgb(127, 255, 0), 5);
+				// dataOnPeak[(int) i] = new GraphViewData(i, 0);
+				// dataOffPeak[(int) i] = new GraphViewData(i,
+				// Math.abs(Math.sin(Math.random() * vSin)));
+				// dataOnMid[(int) i] = new GraphViewData(i, 0);
+				// }
+			}//TODO: Figure this out
+			styleOnPeak = new GraphViewSeriesStyle(Color.RED, 5);
+			// styleOnMid = new GraphViewSeriesStyle(Color.YELLOW, 5);
+			// styleOffPeak = new GraphViewSeriesStyle(Color.GREEN, 5);
 
 			seriesOnPeak = new GraphViewSeries(thisGraph, styleOnPeak,
 					dataOnPeak);
-			seriesOnMid = new GraphViewSeries(thisGraph, styleOnMid, dataOnMid);
-			seriesOffPeak = new GraphViewSeries(thisGraph, styleOffPeak,
-					dataOnPeak);
+			// seriesOnMid = new GraphViewSeries(thisGraph, styleOnMid,
+			// dataOnMid);
+			// seriesOffPeak = new GraphViewSeries(thisGraph, styleOffPeak,
+			// dataOffPeak);
+
+			graphView.addSeries(seriesOnPeak);
+			// graphView.addSeries(seriesOnMid);
+			// graphView.addSeries(seriesOffPeak);
 
 			if (regionalComparison == true) {
 				data = new GraphViewData[numSin];
 				vSin = 0;
 				for (int i = 0; i < numSin; i++) {
 					vSin += 0.2;
-					data[i] = new GraphViewData(i, Math.cos(Math.random()
-							* vSin));
+					data[i] = new GraphViewData(i, Math.abs(Math.cos(Math
+							.random() * vSin)));
 				}
 
 				GraphViewSeriesStyle styleCos = new GraphViewSeriesStyle(
-						Color.rgb(90, 250, 00), 5);
+						Color.BLUE, 5);
 				GraphViewSeries seriesCos = new GraphViewSeries("Regional "
 						+ thisGraph, styleCos, data);
 
@@ -213,27 +225,26 @@ public class GraphingActivity extends Activity {
 				vSin = 0;
 				for (int i = 0; i < numSin; i++) {
 					vSin += 0.2;
-					data[i] = new GraphViewData(i, Math.cos(Math.random()
-							* vSin));
+					data[i] = new GraphViewData(i, Math.abs(Math.cos(Math
+							.random() * vSin)));
 				}
 
 				GraphViewSeriesStyle styleCos = new GraphViewSeriesStyle(
-						Color.rgb(90, 250, 00), 5);
+						Color.BLUE, 5);
 				GraphViewSeries seriesCos = new GraphViewSeries("Industry "
 						+ thisGraph, styleCos, data);
 
 				graphView.addSeries(seriesCos);
 			}
 
-			graphView.addSeries(seriesOnPeak);
-			graphView.addSeries(seriesOnMid);
-			graphView.addSeries(seriesOffPeak);
-			graphView.setViewPort(2, 40);
+			graphView.setViewPort(0, 24);
 			graphView.setScrollable(true);
 			graphView.setScalable(true);
-			// graphView.setShowLegend(true);
+			graphView.setShowLegend(true);
 			graphView.setLegendAlign(LegendAlign.BOTTOM);
 			graphView.getGraphViewStyle().setLegendWidth(400);
+//			graphView.setBackgroundColor(Color.BLUE);
+			graphView.setBackgroundColor(Color.rgb(80, 30, 30));
 
 			layout.addView(graphView);
 

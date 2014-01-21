@@ -56,7 +56,7 @@ public class FullscreenActivity extends Activity {
 
 		setContentView(R.layout.activity_fullscreen);
 		
-		adapter = new ImageAdapter(this, getFilesDir().toString(), false);
+		adapter = new ImageAdapter(this, false);
 		
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();

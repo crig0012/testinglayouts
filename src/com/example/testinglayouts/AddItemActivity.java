@@ -34,7 +34,7 @@ public class AddItemActivity extends Activity {
 		adapter = (ImageAdapter)intent.getSerializableExtra("adapter");
 		//Send context instead?
 		if(adapter == null)
-			adapter = new ImageAdapter(this, getFilesDir().toString(), true);
+			adapter = new ImageAdapter(this, true);
 		
 		gridview = (GridView) findViewById(R.id.gridView1);
 		gridview.setAdapter(adapter);

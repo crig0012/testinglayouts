@@ -21,7 +21,7 @@ public class ImageAdapter extends BaseAdapter {
 
 	private String filePath = "/GreenButtonPrototypeGraphs/";
 
-	public ImageAdapter(Context c, String pathFile, boolean addingItem) {
+	public ImageAdapter(Context c, boolean addingItem) {
 		mContext = c;
 
 		mThumbIds.add(R.drawable.add_item);
@@ -83,6 +83,10 @@ public class ImageAdapter extends BaseAdapter {
 		return false;
 	}
 
+	//public String getMyGraph(String forMe)
+	//{//TODO: Bar vs line
+		 //TODO: GET THIS TO WORK
+//	}
 	private String readFromFile(String fileName) {
 		final File file = new File(Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + filePath + fileName);

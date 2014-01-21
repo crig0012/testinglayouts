@@ -135,9 +135,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sortmenu=0x7f080001;
     }
     public static final class string {
-        public static final int Back=0x7f06000c;
-        public static final int Create=0x7f06000b;
-        public static final int Graph=0x7f06000d;
+        public static final int Back=0x7f06000d;
+        public static final int Create=0x7f06000c;
+        public static final int Graph=0x7f06000b;
         public static final int Test_Button_1=0x7f060003;
         public static final int action_settings=0x7f060009;
         public static final int app_name=0x7f060000;
