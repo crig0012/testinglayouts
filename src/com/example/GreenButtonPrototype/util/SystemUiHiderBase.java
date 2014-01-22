@@ -1,4 +1,4 @@
-package com.example.testinglayouts.util;
+package com.example.GreenButtonPrototype.util;
 
 import android.app.Activity;
 import android.view.View;

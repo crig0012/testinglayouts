@@ -1,4 +1,4 @@
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 import java.io.BufferedReader;
 import java.io.File;

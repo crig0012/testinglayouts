@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

@@ -1,4 +1,4 @@
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 import android.R.drawable;
 

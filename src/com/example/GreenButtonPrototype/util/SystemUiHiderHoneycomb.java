@@ -1,4 +1,4 @@
-package com.example.testinglayouts.util;
+package com.example.GreenButtonPrototype.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

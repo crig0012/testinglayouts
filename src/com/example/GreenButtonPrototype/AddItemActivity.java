@@ -1,5 +1,5 @@
 
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-import com.example.testinglayouts.util.SystemUiHider;
+import com.example.GreenButtonPrototype.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 public final class R {
     public static final class attr {
@@ -198,8 +198,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle com.example.testinglayouts:buttonBarButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle com.example.testinglayouts:buttonBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle com.example.GreenButtonPrototype:buttonBarButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle com.example.GreenButtonPrototype:buttonBarStyle}</code></td><td></td></tr>
            </table>
            @see #ButtonBarContainerTheme_buttonBarButtonStyle
            @see #ButtonBarContainerTheme_buttonBarStyle
@@ -208,23 +208,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010000, 0x7f010001
         };
         /**
-          <p>This symbol is the offset where the {@link com.example.testinglayouts.R.attr#buttonBarButtonStyle}
+          <p>This symbol is the offset where the {@link com.example.GreenButtonPrototype.R.attr#buttonBarButtonStyle}
           attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.example.testinglayouts:buttonBarButtonStyle
+          @attr name com.example.GreenButtonPrototype:buttonBarButtonStyle
         */
         public static final int ButtonBarContainerTheme_buttonBarButtonStyle = 1;
         /**
-          <p>This symbol is the offset where the {@link com.example.testinglayouts.R.attr#buttonBarStyle}
+          <p>This symbol is the offset where the {@link com.example.GreenButtonPrototype.R.attr#buttonBarStyle}
           attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.example.testinglayouts:buttonBarStyle
+          @attr name com.example.GreenButtonPrototype:buttonBarStyle
         */
         public static final int ButtonBarContainerTheme_buttonBarStyle = 0;
     };

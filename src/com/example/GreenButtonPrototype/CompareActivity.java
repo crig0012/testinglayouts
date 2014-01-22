@@ -1,4 +1,4 @@
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 //import android.R;
 import android.app.Activity;
@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.testinglayouts.util.SystemUiHider;
+import com.example.GreenButtonPrototype.util.SystemUiHider;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphView.LegendAlign;

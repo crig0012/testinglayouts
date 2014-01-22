@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.testinglayouts"
+    package="com.example.GreenButtonPrototype"
     android:versionCode="1"
     android:versionName="1.0" >
 	
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.testinglayouts.FullscreenActivity"
+            android:name="com.example.GreenButtonPrototype.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
@@ -28,31 +28,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.testinglayouts.GraphActivity"
+            android:name="com.example.GreenButtonPrototype.GraphActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_graph"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="com.example.testinglayouts.GraphingActivity"
+            android:name="com.example.GreenButtonPrototype.GraphingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_graphing"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="com.example.testinglayouts.CompareActivity"
+            android:name="com.example.GreenButtonPrototype.CompareActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_compare"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="com.example.testinglayouts.AddItemActivity"
+            android:name="com.example.GreenButtonPrototype.AddItemActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_add_item"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="com.example.testinglayouts.EnergyActivity"
+            android:name="com.example.GreenButtonPrototype.EnergyActivity"
             android:label="@string/title_activity_energy" >
         </activity>
     </application>

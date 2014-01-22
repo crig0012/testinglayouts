@@ -1,25 +1,21 @@
-package com.example.testinglayouts;
+package com.example.GreenButtonPrototype;
 
 import java.io.File;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.testinglayouts.util.SystemUiHider;
+import com.example.GreenButtonPrototype.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
