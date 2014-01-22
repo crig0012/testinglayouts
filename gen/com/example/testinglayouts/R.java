@@ -77,32 +77,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int microwave=0x7f02002a;
         public static final int microwave_red=0x7f02002b;
         public static final int microwave_white=0x7f02002c;
-        public static final int oven=0x7f02002d;
-        public static final int oven_red=0x7f02002e;
-        public static final int oven_white=0x7f02002f;
-        public static final int phone=0x7f020030;
-        public static final int phone_red=0x7f020031;
-        public static final int phone_white=0x7f020032;
-        public static final int printer=0x7f020033;
-        public static final int printer_red=0x7f020034;
-        public static final int printer_white=0x7f020035;
-        public static final int sample_0=0x7f020036;
-        public static final int sample_1=0x7f020037;
-        public static final int sample_2=0x7f020038;
-        public static final int sample_3=0x7f020039;
-        public static final int sample_4=0x7f02003a;
-        public static final int sample_5=0x7f02003b;
-        public static final int sample_6=0x7f02003c;
-        public static final int sample_7=0x7f02003d;
-        public static final int television=0x7f02003e;
-        public static final int television_red=0x7f02003f;
-        public static final int television_white=0x7f020040;
-        public static final int toaster=0x7f020041;
-        public static final int toaster_red=0x7f020042;
-        public static final int toaster_white=0x7f020043;
-        public static final int washer=0x7f020044;
-        public static final int washer_red=0x7f020045;
-        public static final int washer_white=0x7f020046;
+        public static final int minimeter=0x7f02002d;
+        public static final int oven=0x7f02002e;
+        public static final int oven_red=0x7f02002f;
+        public static final int oven_white=0x7f020030;
+        public static final int phone=0x7f020031;
+        public static final int phone_red=0x7f020032;
+        public static final int phone_white=0x7f020033;
+        public static final int printer=0x7f020034;
+        public static final int printer_red=0x7f020035;
+        public static final int printer_white=0x7f020036;
+        public static final int sample_0=0x7f020037;
+        public static final int sample_1=0x7f020038;
+        public static final int sample_2=0x7f020039;
+        public static final int sample_3=0x7f02003a;
+        public static final int sample_4=0x7f02003b;
+        public static final int sample_5=0x7f02003c;
+        public static final int sample_6=0x7f02003d;
+        public static final int sample_7=0x7f02003e;
+        public static final int television=0x7f02003f;
+        public static final int television_red=0x7f020040;
+        public static final int television_white=0x7f020041;
+        public static final int toaster=0x7f020042;
+        public static final int toaster_red=0x7f020043;
+        public static final int toaster_white=0x7f020044;
+        public static final int washer=0x7f020045;
+        public static final int washer_red=0x7f020046;
+        public static final int washer_white=0x7f020047;
     }
     public static final class id {
         public static final int action_settings=0x7f09000b;
@@ -123,7 +124,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sortByName=0x7f09000d;
         public static final int sortByType=0x7f09000f;
         public static final int sortByUsage=0x7f090010;
-        public static final int testTools=0x7f090012;
     }
     public static final class layout {
         public static final int activity_add_item=0x7f030000;

@@ -1,6 +1,7 @@
 package com.example.testinglayouts;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -68,8 +70,6 @@ public class GraphingActivity extends Activity {
 		extras = intent.getExtras();
 
 		whichGraph(extras);
-		// TODO: why does this break? Try only one series again
-		String wut = "";
 	}
 
 	@Override
@@ -83,7 +83,6 @@ public class GraphingActivity extends Activity {
 	}
 
 	protected void whichGraph(Bundle extras) {
-		// TODO: Make an array of graphs, then call showGraph(thisGraph)?
 		LinearLayout layout = null;
 		GraphView graphView = null;
 		GraphViewSeries seriesOnPeak;
@@ -152,27 +151,84 @@ public class GraphingActivity extends Activity {
 					thisGraph = thisGraph.replace("_red", "");
 			}
 
-			graphView = new LineGraphView(this, thisGraph);
+			int numSin = 1000;
+			thisTime = 7;
+			dataOnMid = new GraphViewData[numSin];
+			dataOffPeak = new GraphViewData[numSin];
+			vSin = 0;
+
+			final java.text.DateFormat dateTimeFormatter = DateFormat
+					.getTimeFormat(getBaseContext());
+
+			graphView = new LineGraphView(this, thisGraph) {
+				@Override
+				protected String formatLabel(double value, boolean isValueX) {
+					if (isValueX) {
+						// transform number to time
+						return dateTimeFormatter.format(new Date(
+								(long) value * 10000));
+					} else {
+						return super.formatLabel(value, isValueX);
+					}
+				}
+			};
 			// TODO: Fake some data, test this
-			/*
-			 * String[] graphNumbersString = adapter.getMyGraph(thisGraph);
-			 * boolean gettingNumbers = false; String timeString = null; int
-			 * timeInt = -1;
-			 * 
-			 * for (int i = 0; i < graphNumbersString.length; i++)// Maybe int i
-			 * = // 2? { if (graphNumbersString[i].contains("START_TIME"))
-			 * gettingNumbers = false;
-			 * 
-			 * if (gettingNumbers == true) { if (timeInt == -1) timeInt = i;
-			 * dataOnPeak[i] = new GraphViewData(timeInt,
-			 * Integer.parseInt(graphNumbersString[i])); timeInt += 1; // TODO
-			 * // if(timeInt >= 2400) // if(timeInt.lastTwoDigits >= 60 } if
-			 * (gettingNumbers == false &&
-			 * graphNumbersString[i].contains("START_TIME")) { timeString =
-			 * graphNumbersString[i]; timeString =
-			 * timeString.replace("START_TIME", ""); timeInt =
-			 * Integer.parseInt(timeString); gettingNumbers = true; } }
-			 */
+
+			String[] graphNumbersString = adapter.getMyGraph(thisGraph);
+			boolean gettingNumbers = false;
+			String timeString = null;
+			long timeInt = -1;
+			char[] timeChar;
+			String stringOfTime = "";
+			dataOnPeak = new GraphViewData[graphNumbersString.length];
+			dataOnPeak[0]  = new GraphViewData(0, 0);
+			dataOnPeak[1]  = new GraphViewData(1, 0);
+			numSin = graphNumbersString.length;
+			
+			for (int i = 2; i < graphNumbersString.length; i++) {
+				if (graphNumbersString[i] == null) {
+					dataOnPeak[i] = new GraphViewData(i, 0);
+					continue;
+				}
+
+				if (graphNumbersString[i].contains("T")) {
+					dataOnPeak[i] = new GraphViewData(i, 0);
+					gettingNumbers = false;
+				}
+
+				if (gettingNumbers == true) {
+					if (timeInt == -1)
+						timeInt = i;
+					else if (timeInt != i)
+						timeInt = timeInt / 10000;
+					// i = (int)timeInt;
+					String temp = graphNumbersString[i];
+					temp = temp.replace("|", "");
+					dataOnPeak[i] = new GraphViewData(i,
+							Double.parseDouble(temp));
+					timeInt = -1;
+				}
+				// if(timeInt >= 2400) // if(timeInt.lastTwoDigits >= 60 }
+				if (gettingNumbers == false
+						&& graphNumbersString[i].contains("T")) {
+					timeString = graphNumbersString[i];
+					timeString = timeString.replace("T", "");// TODO: delete
+																// first chuck
+																// of text
+					timeChar = timeString.toCharArray();
+					stringOfTime = "";
+					for (int k = 8; k < (timeChar.length - 3); k++)
+						stringOfTime += timeChar[k];
+					timeInt = twentyFourHourTimeToMilliseconds(Integer
+							.parseInt(stringOfTime));
+					gettingNumbers = true;
+				}
+				
+				if(gettingNumbers == false)
+				{
+					dataOnPeak[i] = new GraphViewData(i, 0);
+				}
+			}
 
 			/*
 			 * TODO: Try out this, set timer to six seconds, use it for
@@ -192,34 +248,23 @@ public class GraphingActivity extends Activity {
 			// TODO: Find out how to get pinch levels, use that to change the x
 			// axis
 			// random curve
-			int numSin = 24;
-			thisTime = 7;
-			dataOnPeak = new GraphViewData[numSin];
-			dataOnMid = new GraphViewData[numSin];
-			dataOffPeak = new GraphViewData[numSin];
-			vSin = 0;
-			for (double i = 0; i < numSin; i++) {
-				vSin += 0.2;
-				// if ((i >= 7 && i < 11) || (i >= 17 && i < 19)) {
-				// if (whatTimeIsIt(i) == 7 || whatTimeIsIt(i) == 17) {
-				dataOnPeak[(int) i] = new GraphViewData(i, Math.abs(Math
-						.sin(Math.random() * vSin)));
-				// dataOnMid[(int) i] = new GraphViewData(i, 0);
-				// dataOffPeak[(int) i] = new GraphViewData(i, 0);
-				// } else if (i >= 11 && i < 17) {
-				// else if (whatTimeIsIt(i) == 11) {
-				// dataOnPeak[(int) i] = new GraphViewData(i, 0);
-				// dataOnMid[(int) i] = new GraphViewData(i,
-				// Math.abs(Math.sin(Math.random() * vSin)));
-				// dataOffPeak[(int) i] = new GraphViewData(i, 0);
-				// } else {
-				// else if (whatTimeIsIt(i) == 19) {
-				// dataOnPeak[(int) i] = new GraphViewData(i, 0);
-				// dataOffPeak[(int) i] = new GraphViewData(i,
-				// Math.abs(Math.sin(Math.random() * vSin)));
-				// dataOnMid[(int) i] = new GraphViewData(i, 0);
-				// }
-			}// TODO: Figure this out
+			/*
+			 * for (int i = 0; i < numSin; i++) { vSin += 0.2; // if ((i >= 7 &&
+			 * i < 11) || (i >= 17 && i < 19)) { // if (whatTimeIsIt(i) == 7 ||
+			 * whatTimeIsIt(i) == 17) { dataOnPeak[i] = new GraphViewData(i * 8,
+			 * Math.abs(Math.sin(Math .random() * vSin))); // dataOnMid[(int) i]
+			 * = new GraphViewData(i, 0); // dataOffPeak[(int) i] = new
+			 * GraphViewData(i, 0); // } else if (i >= 11 && i < 17) { // else
+			 * if (whatTimeIsIt(i) == 11) { // dataOnPeak[(int) i] = new
+			 * GraphViewData(i, 0); // dataOnMid[(int) i] = new GraphViewData(i,
+			 * // Math.abs(Math.sin(Math.random() * vSin))); //
+			 * dataOffPeak[(int) i] = new GraphViewData(i, 0); // } else { //
+			 * else if (whatTimeIsIt(i) == 19) { // dataOnPeak[(int) i] = new
+			 * GraphViewData(i, 0); // dataOffPeak[(int) i] = new
+			 * GraphViewData(i, // Math.abs(Math.sin(Math.random() * vSin))); //
+			 * dataOnMid[(int) i] = new GraphViewData(i, 0); // } }// TODO:
+			 * Figure this out
+			 */
 			styleOnPeak = new GraphViewSeriesStyle(Color.RED, 5);
 			// styleOnMid = new GraphViewSeriesStyle(Color.YELLOW, 5);
 			// styleOffPeak = new GraphViewSeriesStyle(Color.GREEN, 5);
@@ -240,7 +285,7 @@ public class GraphingActivity extends Activity {
 				vSin = 0;
 				for (int i = 0; i < numSin; i++) {
 					vSin += 0.2;
-					data[i] = new GraphViewData(i, Math.abs(Math.cos(Math
+					data[i] = new GraphViewData(i * 8, Math.abs(Math.cos(Math
 							.random() * vSin)));
 				}
 
@@ -257,7 +302,7 @@ public class GraphingActivity extends Activity {
 				vSin = 0;
 				for (int i = 0; i < numSin; i++) {
 					vSin += 0.2;
-					data[i] = new GraphViewData(i, Math.abs(Math.cos(Math
+					data[i] = new GraphViewData(i * 8, Math.abs(Math.cos(Math
 							.random() * vSin)));
 				}
 
@@ -278,18 +323,39 @@ public class GraphingActivity extends Activity {
 			// graphView.setBackgroundColor(Color.BLUE);
 			graphView.setBackgroundColor(Color.rgb(80, 30, 30));
 
+			/*
+			 * graphView.setCustomLabelFormatter(new CustomLabelFormatter() {
+			 * 
+			 * @Override public String formatLabel(double value, boolean
+			 * isValueX) { if (isValueX) { if (value % 3 != 0) return "-"; else
+			 * if (value < 5) { return "small"; } else if (value < 15) { return
+			 * "middle"; } else { return "big"; } }
+			 * 
+			 * //if(value.l\astTwo == 60, value -= 60, value +=100
+			 * 
+			 * return null; // let graphview generate Y-axis label for us } });
+			 */
+
 			layout.addView(graphView);
 
 			// private GraphViewData[] dataOffPeak; Make this a collection of
 			// all the others
+			if(graphNumbersString[1].contains("true"))
+				energyNotification(graphNumbersString[0]);
 			if (tooMuchEnergy(data) == 0) {
-				energyNotification(thisGraph, j);
+				energyNotification(thisGraph);
 			}
 		}
 	}
 
-	protected double whatTimeIsIt(double isItThisTime) {
+	protected int twentyFourHourTimeToMilliseconds(int time) {
+		int hours = time / 100;
+		int minutes = time % 100;
+		return ((hours * 60) + minutes) * 60000;
+	}
 
+	protected double whatTimeIsIt(double isItThisTime) {
+		// TODO: Return an actual time
 		if ((isItThisTime / 24) - (7 / 24) == 1)
 			thisTime = 7;
 		else if ((isItThisTime / 24) - (11 / 24) == 1)
@@ -304,7 +370,7 @@ public class GraphingActivity extends Activity {
 		return thisTime;
 	}
 
-	protected void energyNotification(String graphName, int graphPosition) {
+	protected void energyNotification(String graphName) {
 		graphName = graphName.toLowerCase();
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
@@ -317,19 +383,6 @@ public class GraphingActivity extends Activity {
 
 		Intent resultIntent = new Intent(this, GraphingActivity.class);
 		Bundle extras = new Bundle();
-
-		if (graphPosition == 0)
-			extras.putString(FullscreenActivity.DEVICE_ONE,
-					graphName.toUpperCase());
-		if (graphPosition == 1)
-			extras.putString(FullscreenActivity.DEVICE_TWO,
-					graphName.toUpperCase());
-		if (graphPosition == 2)
-			extras.putString(FullscreenActivity.DEVICE_THREE,
-					graphName.toUpperCase());
-		if (graphPosition == 3)
-			extras.putString(FullscreenActivity.DEVICE_FOUR,
-					graphName.toUpperCase());
 
 		resultIntent.putExtras(extras);
 

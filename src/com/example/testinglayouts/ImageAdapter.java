@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.content.Context;
@@ -103,14 +104,14 @@ public class ImageAdapter extends BaseAdapter {
 	public String[] getMyGraph(String forMe) {// TODO: Bar vs line
 												// TODO: GET THIS TO WORK
 		final File file = new File(Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + filePath + forMe);
+				.getAbsolutePath() + filePath + getID(forMe) + ".txt");
 		int howBig;
 		try {
 			howBig = countCharsBuffer(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			howBig = 1000000;
+			howBig = 1000;
 		}
 		String[] toRet = new String[howBig];
 		StringBuilder text = new StringBuilder();
@@ -132,7 +133,25 @@ public class ImageAdapter extends BaseAdapter {
 
 			br.close();
 		} catch (IOException e) {
-			// You'll need to add proper error handling here
+			toRet[0] = forMe + "|";
+			toRet[1] = "false|";
+			toRet[2] = "T20140121060300|";
+			toRet[630] = "T20140121180300|";
+			Random rand = new Random();
+
+			for(int i = 3; i < 999; i++)
+			{
+				if(i >= 230 && i <= 630)
+					continue;
+				if(i == 630)
+					continue;
+				if(i >= 803)
+					continue;
+				
+				int randomNum = rand.nextInt((13 - 11) + 1) + 11;
+				toRet[i] = Integer.toString(randomNum);//Double.toString(Math.abs(Math.sin(Math .random() * i))*10) + "|";
+			}
+				//toRet"false|T20140121060300|0001|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|T20140121180300|0001|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008";
 		}
 		return toRet;
 	}
@@ -169,24 +188,6 @@ public class ImageAdapter extends BaseAdapter {
 			// You'll need to add proper error handling here
 		}
 		return text.toString();
-		/*
-		 * String ret = ""; // fileName = filePath + fileName;
-		 * 
-		 * try { InputStream inputStream = mContext.openFileInput(fileName);
-		 * 
-		 * if (inputStream != null) { InputStreamReader inputStreamReader = new
-		 * InputStreamReader( inputStream); BufferedReader bufferedReader = new
-		 * BufferedReader( inputStreamReader); String receiveString = "";
-		 * StringBuilder stringBuilder = new StringBuilder();
-		 * 
-		 * while ((receiveString = bufferedReader.readLine()) != null) {
-		 * stringBuilder.append(receiveString + '\n'); if (receiveString == "|")
-		 * { ret = stringBuilder.toString(); inputStream.close(); return ret; }
-		 * } ret = stringBuilder.toString(); inputStream.close(); } } catch
-		 * (FileNotFoundException e) { Log.i("File not found", e.toString()); }
-		 * catch (IOException e) { Log.i("Can not read file:", e.toString()); }
-		 * return ret;
-		 */
 	}
 
 	public int getCount() {
@@ -204,6 +205,8 @@ public class ImageAdapter extends BaseAdapter {
 	public void Save() {
 		for (int i = 0; i < mThumbIds.size(); i++) {
 			FileOutputStream fos = null;
+			if (mThumbIds.get(i) == 0)
+				continue;
 			try {
 				final File dir = new File(Environment
 						.getExternalStorageDirectory().getAbsolutePath()
@@ -226,6 +229,28 @@ public class ImageAdapter extends BaseAdapter {
 
 				fos = new FileOutputStream(myFile);
 
+				if (body.contains("console"))
+					body += "false|T20140121062200|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020";
+				else if (body.contains("desk_fan"))
+					body += "false|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|T20140121172200|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|";
+				else if (body.contains("toaster"))
+					body += "false|T20140121060100|0014|0018|0018|T20140121060500|0014|0018|0018|T20140121172200|0014|0018|0018T20140121232200|0014|0018|0018";
+				else if (body.contains("television"))
+					body += "true|T20140121070000|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|T20140121170000|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0001|0009|0012|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015|0015";
+				else if (body.contains("oven"))
+					body += "true|T20140121170100|0014|0018|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0002|0002|0002|0002|0002|0022|0022|0022|0022|0022|0002|0012|0012|0013|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022|0022";
+				else if (body.contains("iron"))
+					body += "false|T20140121062300|0007|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020";
+				else if (body.contains("hair_dryer"))
+					body += "false|T20140121070100|0003|0023|0023";
+				else if (body.contains("grill"))
+					body += "false|T20140121060000|0001|0024|0024|0024|0024|0024|0024|0024|0024|0024|0020|0001|T20140121211100|0001|0024|0024|0024|0024|0024|0024|0024|0024|0024|0020|0001";
+				else if (body.contains("dishwasher"))
+					body += "false|T20140121083100|0009|0025|0025|0013|0013|0013|0013|0013|0013|0013|0023|0025|0025|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0013|0035|0035|";
+				else if (body.contains("computer"))
+					body += "false|T20140121060300|0001|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|T20140121180300|0001|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0008|0011|0008|0008|0008|0008|0008";
+				else// random numbers
+					body += "false|T20140121062200|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020|0020";
 				fos.write(body.getBytes());
 				fos.close();
 			} catch (IOException e) {
@@ -343,6 +368,8 @@ public class ImageAdapter extends BaseAdapter {
 
 		// int index = mThumbIds.indexOf(idImage);
 		for (int i = 0; i < mThumbIds.size(); i++) {
+			if (mThumbIds.get(i) == 0)
+				continue;
 			String temp = mContext.getResources().getResourceEntryName(
 					mThumbIds.get(i));
 			if (temp.contains(resName)) {
@@ -361,12 +388,11 @@ public class ImageAdapter extends BaseAdapter {
 		Integer idImage = mContext.getResources().getIdentifier(resName,
 				"drawable", mContext.getPackageName());
 
-//		int[] randomNumbers
+		// int[] randomNumbers
 		mThumbIds.add(idImage);
 
 		Save();
 	}
-
 	// house last or first, always. First is easier
 	// references to our images
 }

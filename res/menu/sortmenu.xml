@@ -27,9 +27,4 @@
                 android:titleCondensed="Delete"/>
         </menu>
     </item>
-    <item
-        android:id="@+id/testTools"
-        android:title="Testing Tools"
-        android:titleCondensed="Test">
-    </item>
 </menu>

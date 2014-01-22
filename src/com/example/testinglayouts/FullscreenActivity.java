@@ -147,7 +147,8 @@ public class FullscreenActivity extends Activity {
 		final File path = new File(Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + filePath);
 		adapter.deleteDirectory(path);
-		gridview.invalidateViews();
+		this.onCreate(null);
+		//gridview.invalidateViews();
 	}
 	
 	private void setSelectedDevice(int position) {
