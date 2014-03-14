@@ -1,0 +1,63 @@
+Decide where to go
+Clean up
+Pack up;
+
+Accelerometer app
+
+Phalanx leader for Daxos deck
+Archtype of Courage?
+Eidolon of countless battles
+Ghostblade eidolon
+Sunbond
+Arbiter of the Ideal? Have to have a tap generator for him, though
+Archetype of Imagination?
+Fated Infatuation?
+Thassa's Rebuff? Check devotion levels
+Ephara, God of the Polis?
+Ephara's Enlightenment?
+Temple of Enlightenment
+
+Hero's Podium? Need mirror gallery too
+
+Tromokratis for fun deck
+Vortex Elemental for same deck
+Whelming Wave for Kraken/Leviathan/Water type deck
+
+Mindreaver for blue/black exile deck
+
+Archetype of Finality for Gorgon/Deathtouch deck
+
+Eye Gouge for creature destruction deck sideboard
+
+Fated Return
+Herald of Torment on an opponents creature that is Pacified
+
+Warchanter of Mogis for minotaur deck
+Fall of the Hammer? After attack, use it 
+Felhide Spiritbinder
+Kragma Butcher
+Oracle of Bones?
+Ragemonger
+Temple of Malice
+
+Oracle's Insight as a tap generator
+Ephara's Radiance for tap gen
+
+Oreskos Sun Guide + thing that pay 2 mana, tpa creature gain 3 life
+
+DB saves GPS coords as 45.0, etc
+
+Installer that deletes itself as it installs the program
+
+
+SWORDS AND POTIONS 2
+
+For the dragon deck, the sundial? With it and sneak attack out, I can essentially cast ANY dragon for 1, then end the turn for 1 more and leave it on the field. Switch Death by Dragons for Balefire Dragon? Or Dragon Broodmother? Broodmate Dragon?
+
+Couch and chair at Chelsea's
+Stop at Merivale
+
+Trinisphere for tax deck
+
+For Unity, make the Spike the same way I make the wall in wallbreaker, and add each item to the array of modules
+For Spike, make it so that gravity doesn't affect it unless energy is equal to or less than 0

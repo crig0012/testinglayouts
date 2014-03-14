@@ -75,16 +75,7 @@ public class AddItemActivity extends Activity {
 			}
 		});
 	}
-/*
- * (non-Javadoc)
- * @see android.app.Activity#onPostCreate(android.os.Bundle)
- * for(int i = 0; i < res.size(); i ++)
- * {
- *  R.drawable.res[i];
- *  Should I rename the files at runtime or beforehand? Probably runtime, for user ease
- *  See if its possible to recolour at runtime as well
- * }
- */
+
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
